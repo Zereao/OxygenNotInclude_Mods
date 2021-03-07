@@ -93,10 +93,10 @@ namespace SuperHatch.patcher
             string diseaseId, float diseasePerKgProduced
         )
         {
-            consumeTag = Enum.TryParse(consumeTagNameOfConfig, out SimHashes consumeHash)
+            consumeTag = Enum.TryParse(consumeTagNameOfConfig, true, out SimHashes consumeHash)
                 ? consumeHash.CreateTag()
                 : consumeTag;
-            produceTag = Enum.TryParse(produceTagNameOfConfig, out SimHashes produceHash)
+            produceTag = Enum.TryParse(produceTagNameOfConfig, true, out SimHashes produceHash)
                 ? produceHash.CreateTag()
                 : produceTag;
             var consumedTagSet = new HashSet<Tag> {consumeTag};
