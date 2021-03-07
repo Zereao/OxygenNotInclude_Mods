@@ -25,7 +25,7 @@ namespace SuperHatch
 
         public Logger(string modName)
         {
-            _modName = $"[{modName}]";
+            _modName = $"********【{modName}】********";
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace SuperHatch
         /// </summary>
         /// <param name="msg">消息模板，使用{}做占位符</param>
         /// <param name="args">参数</param>
-        public void Info(string msg, object[] args)
+        public void Info(string msg, params object[] args)
         {
             if (CollectionUtils.IsEmpty(args))
             {
@@ -106,6 +106,7 @@ namespace SuperHatch
                 throw new ApplicationException(this.ConvertMsg(errorMsg));
             }
 
+            oldFormatter = $"{_modName} {oldFormatter}";
             if (!oldFormatter.Contains("{}"))
             {
                 return oldFormatter;

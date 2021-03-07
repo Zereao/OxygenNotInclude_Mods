@@ -10,16 +10,17 @@ namespace SuperHatch.patcher
 {
     public abstract class AbstractPatcher
     {
-        private static Hashtable _configMapping = ConfigParser.GetConfigMapping();
+        private static readonly Hashtable ConfigMapping = ConfigParser.GetConfigMapping();
+
+        private static readonly Logger Log = new Logger(GlobalConstants.ModName);
 
         public static void DoPatch(
             ref List<Diet.Info> result,
             ref Tag poopTag,
-            ref float caloriesPerKg,
-            ref float producedConversionRate,
             ref string diseaseId,
             ref float diseasePerKgProduced)
         {
+            Log.Info("准备开始执行补丁补丁逻辑。。。。。");
             var newResultList = new List<Diet.Info>();
             foreach (var dietInfo in result)
             {
@@ -27,8 +28,8 @@ namespace SuperHatch.patcher
                 foreach (var consumedTag in consumedTags)
                 {
                     var consumeTagName = consumedTag.Name;
-                    if (!_configMapping.ContainsKey(consumeTagName)) continue;
-                    if (!(_configMapping[consumeTagName] is ConfigModel config)) continue;
+                    if (!ConfigMapping.ContainsKey(consumeTagName)) continue;
+                    if (!(ConfigMapping[consumeTagName] is ConfigModel config)) continue;
                     var newDietInfo = BuildInfo(
                         consumedTag, consumeTagName,
                         poopTag, config.ProduceName,

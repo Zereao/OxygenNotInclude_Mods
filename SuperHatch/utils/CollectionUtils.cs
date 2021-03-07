@@ -3,6 +3,8 @@
 // @Steam https://steamcommunity/id/hexaiolun/
 
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SuperHatch.utils
 {
@@ -13,9 +15,12 @@ namespace SuperHatch.utils
         }
 
         /// <summary>
-        /// 空ArrayList，全局统一，节省内存
+        /// 空 List ，全局统一，节省内存
         /// </summary>
-        public static readonly ArrayList EmptyList = new ArrayList();
+        public static List<T> EmptyList<T>()
+        {
+            return Enumerable.Empty<T>().ToList();
+        }
 
         /// <summary>
         /// 空Hashtable，全局统一，节省内存
@@ -34,6 +39,14 @@ namespace SuperHatch.utils
         /// <param name="list">数组</param>
         /// <returns>true OR false</returns>
         public static bool IsEmpty(ArrayList list)
+        {
+            return list == null || list.Count == 0;
+        }
+
+        /// <summary>判断一个 List 是否为空</summary>
+        /// <param name="list">数组</param>
+        /// <returns>true OR false</returns>
+        public static bool IsEmpty<T>(List<T> list)
         {
             return list == null || list.Count == 0;
         }

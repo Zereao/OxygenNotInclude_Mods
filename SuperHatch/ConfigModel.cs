@@ -21,5 +21,11 @@ namespace SuperHatch
 
         /// <summary>每周期消耗量 kg</summary>
         public float EatenEachCycle = 10f;
+
+        public override string ToString()
+        {
+            return
+                $"【ConsumeName = {ConsumeName}, ProduceName = {ProduceName}, ConversionRate = {ConversionRate}, EatenEachCycle = {EatenEachCycle}】";
+        }
     }
 }
