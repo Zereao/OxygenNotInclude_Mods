@@ -13,19 +13,18 @@ namespace SuperHatch.config
         /// <summary>哈奇产出</summary>
         public string ProduceName = "Steel";
 
-        /// <summary>
-        /// 转换率；
-        /// 1 - 100%转换；2 - 吃100kg，产出200kg；0.75 - 吃100kg，产出75kg
-        /// </summary>
-        public float ConversionRate = 2f;
+        /// <summary>每周期消耗量，单位 千克</summary>
+        public float ConsumeEachCycle = 10f;
 
-        /// <summary>每周期消耗量 kg</summary>
-        public float EatenEachCycle = 10f;
+        /// <summary>
+        /// 每周期产量，单位 千克
+        /// </summary>
+        public float ProduceEachCycle = 1000f;
 
         public override string ToString()
         {
             return
-                $"【ConsumeName = {ConsumeName}, ProduceName = {ProduceName}, ConversionRate = {ConversionRate}, EatenEachCycle = {EatenEachCycle}】";
+                $"【ConsumeName = {ConsumeName}, ProduceName = {ProduceName}, ConsumeEachCycle = {ConsumeEachCycle}, ProduceEachCycle = {ProduceEachCycle}】";
         }
     }
 }

@@ -11,6 +11,7 @@
         <AssemblyName>SuperHatch</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,14 +54,14 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="common\CollectionUtils.cs" />
-        <Compile Include="common\GlobalConstants.cs" />
-        <Compile Include="common\Logger.cs" />
-        <Compile Include="config\ConfigModel.cs" />
-        <Compile Include="config\ConfigParser.cs" />
-        <Compile Include="patcher\AbstractHatchDietInfoPatcher.cs" />
-        <Compile Include="patcher\SuperPatcher.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="src\common\CollectionUtils.cs" />
+        <Compile Include="src\common\GlobalConstants.cs" />
+        <Compile Include="src\common\Logger.cs" />
+        <Compile Include="src\config\ConfigModel.cs" />
+        <Compile Include="src\config\ConfigParser.cs" />
+        <Compile Include="src\patcher\AbstractHatchDietInfoPatcher.cs" />
+        <Compile Include="src\patcher\SuperPatcher.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
