@@ -7,119 +7,123 @@ using Harmony;
 
 namespace SuperHatch.patcher
 {
-    /// <summary>
-    /// 哈奇的配置，主要位于 BaseHatchConfig 类中;
-    /// 需要修改的 光滑哈奇 主要吃金属，故需要修改 MetalDiet() 方法
-    /// </summary>
     [HarmonyPatch(typeof(BaseHatchConfig), "BasicRockDiet")]
-    public class BasicRockDietPatcher : AbstractPatcher
+    public class BasicRockDietPatcher : AbstractHatchDietInfoPatcher
     {
         /// <summary>
-        /// 新增食谱：若哈奇吃 铁矿，则产出 钢
+        /// 基础食物补丁
         /// </summary>
         /// <param name="__result">原方法的结果；Harmony框架用法，必须要叫这名</param>
         /// <param name="poopTag">产物标签</param>
+        /// <param name="caloriesPerKg">每千克食物能够提供的卡路里数</param>
+        /// <param name="producedConversionRate"></param>
         /// <param name="diseaseId">病菌ID</param>
         /// <param name="diseasePerKgProduced">每公斤病产生病菌数</param>
         public static void Postfix(
             ref List<Diet.Info> __result,
             ref Tag poopTag,
-            ref string diseaseId,
-            ref float diseasePerKgProduced)
+            ref float caloriesPerKg, ref float producedConversionRate,
+            ref string diseaseId, ref float diseasePerKgProduced)
         {
-            DoPatch(ref __result, ref poopTag, ref diseaseId, ref diseasePerKgProduced);
+            DoPatch(ref __result, ref poopTag,
+                ref caloriesPerKg, ref producedConversionRate,
+                ref diseaseId, ref diseasePerKgProduced);
         }
     }
 
-    /// <summary>
-    /// 哈奇的配置，主要位于 BaseHatchConfig 类中;
-    /// 需要修改的 光滑哈奇 主要吃金属，故需要修改 MetalDiet() 方法
-    /// </summary>
     [HarmonyPatch(typeof(BaseHatchConfig), "HardRockDiet")]
-    public class HardRockDietPatcher : AbstractPatcher
+    public class HardRockDietPatcher : AbstractHatchDietInfoPatcher
     {
         /// <summary>
-        /// 新增食谱：若哈奇吃 铁矿，则产出 钢
+        /// 硬质食物补丁
         /// </summary>
         /// <param name="__result">原方法的结果；Harmony框架用法，必须要叫这名</param>
         /// <param name="poopTag">产物标签</param>
+        /// <param name="caloriesPerKg">每千克食物能够提供的卡路里数</param>
+        /// <param name="producedConversionRate"></param>
         /// <param name="diseaseId">病菌ID</param>
         /// <param name="diseasePerKgProduced">每公斤病产生病菌数</param>
         public static void Postfix(
             ref List<Diet.Info> __result,
             ref Tag poopTag,
-            ref string diseaseId,
-            ref float diseasePerKgProduced)
+            ref float caloriesPerKg, ref float producedConversionRate,
+            ref string diseaseId, ref float diseasePerKgProduced)
         {
-            DoPatch(ref __result, ref poopTag, ref diseaseId, ref diseasePerKgProduced);
+            DoPatch(ref __result, ref poopTag, ref caloriesPerKg,
+                ref producedConversionRate, ref diseaseId,
+                ref diseasePerKgProduced);
         }
     }
 
-    /// <summary>
-    /// 哈奇的配置，主要位于 BaseHatchConfig 类中;
-    /// 需要修改的 光滑哈奇 主要吃金属，故需要修改 MetalDiet() 方法
-    /// </summary>
     [HarmonyPatch(typeof(BaseHatchConfig), "MetalDiet")]
-    public class MetalDietPatcher : AbstractPatcher
+    public class MetalDietPatcher : AbstractHatchDietInfoPatcher
     {
         /// <summary>
-        /// 新增食谱：若哈奇吃 铁矿，则产出 钢
+        /// 金属食物补丁
         /// </summary>
         /// <param name="__result">原方法的结果；Harmony框架用法，必须要叫这名</param>
         /// <param name="poopTag">产物标签</param>
+        /// <param name="caloriesPerKg">每千克食物能够提供的卡路里数</param>
+        /// <param name="producedConversionRate"></param>
         /// <param name="diseaseId">病菌ID</param>
         /// <param name="diseasePerKgProduced">每公斤病产生病菌数</param>
         public static void Postfix(
             ref List<Diet.Info> __result,
             ref Tag poopTag,
-            ref string diseaseId,
-            ref float diseasePerKgProduced)
+            ref float caloriesPerKg, ref float producedConversionRate,
+            ref string diseaseId, ref float diseasePerKgProduced)
         {
-            DoPatch(ref __result, ref poopTag, ref diseaseId, ref diseasePerKgProduced);
+            DoPatch(ref __result, ref poopTag,
+                ref caloriesPerKg, ref producedConversionRate,
+                ref diseaseId, ref diseasePerKgProduced);
         }
     }
 
-    /// <summary>
-    /// 哈奇的配置，主要位于 BaseHatchConfig 类中;
-    /// 需要修改的 光滑哈奇 主要吃金属，故需要修改 MetalDiet() 方法
-    /// </summary>
     [HarmonyPatch(typeof(BaseHatchConfig), "VeggieDiet")]
-    public class VeggieDietPatcher : AbstractPatcher
+    public class VeggieDietPatcher : AbstractHatchDietInfoPatcher
     {
         /// <summary>
-        /// 新增食谱：若哈奇吃 铁矿，则产出 钢
+        /// 素食补丁
         /// </summary>
         /// <param name="__result">原方法的结果；Harmony框架用法，必须要叫这名</param>
         /// <param name="poopTag">产物标签</param>
+        /// <param name="caloriesPerKg">每千克食物能够提供的卡路里数</param>
+        /// <param name="producedConversionRate"></param>
         /// <param name="diseaseId">病菌ID</param>
         /// <param name="diseasePerKgProduced">每公斤病产生病菌数</param>
         public static void Postfix(
             ref List<Diet.Info> __result,
             ref Tag poopTag,
-            ref string diseaseId,
-            ref float diseasePerKgProduced)
+            ref float caloriesPerKg, ref float producedConversionRate,
+            ref string diseaseId, ref float diseasePerKgProduced)
         {
-            DoPatch(ref __result, ref poopTag, ref diseaseId, ref diseasePerKgProduced);
+            DoPatch(ref __result, ref poopTag,
+                ref caloriesPerKg, ref producedConversionRate,
+                ref diseaseId, ref diseasePerKgProduced);
         }
     }
 
     [HarmonyPatch(typeof(BaseHatchConfig), "FoodDiet")]
-    public class FoodDietPatcher : AbstractPatcher
+    public class FoodDietPatcher : AbstractHatchDietInfoPatcher
     {
         /// <summary>
-        /// 新增食谱：若哈奇吃 铁矿，则产出 钢
+        /// 制造食物补丁
         /// </summary>
         /// <param name="__result">原方法的结果；Harmony框架用法，必须要叫这名</param>
         /// <param name="poopTag">产物标签</param>
+        /// <param name="caloriesPerKg">每千克食物能够提供的卡路里数</param>
+        /// <param name="producedConversionRate"></param>
         /// <param name="diseaseId">病菌ID</param>
         /// <param name="diseasePerKgProduced">每公斤病产生病菌数</param>
         public static void Postfix(
             ref List<Diet.Info> __result,
             ref Tag poopTag,
-            ref string diseaseId,
-            ref float diseasePerKgProduced)
+            ref float caloriesPerKg, ref float producedConversionRate,
+            ref string diseaseId, ref float diseasePerKgProduced)
         {
-            DoPatch(ref __result, ref poopTag, ref diseaseId, ref diseasePerKgProduced);
+            DoPatch(ref __result, ref poopTag,
+                ref caloriesPerKg, ref producedConversionRate,
+                ref diseaseId, ref diseasePerKgProduced);
         }
     }
 }

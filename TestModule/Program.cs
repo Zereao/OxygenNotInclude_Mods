@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using SuperHatch;
+using SuperHatch.common;
+using SuperHatch.config;
 
 namespace TestModule
 {

@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SuperHatch.utils
+namespace SuperHatch.common
 {
     public class CollectionUtils
     {

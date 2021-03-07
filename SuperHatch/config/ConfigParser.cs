@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System.IO;
 using KMod;
 using Newtonsoft.Json;
-using SuperHatch.utils;
+using SuperHatch.common;
 
-namespace SuperHatch
+namespace SuperHatch.config
 {
     public class ConfigParser
     {
-        private static readonly Logger Log = new Logger(GlobalConstants.ModName);
+        private static readonly common.Logger Log = new common.Logger(GlobalConstants.ModName);
 
         /// <summary>
         /// 配置文件目录路径

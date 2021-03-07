@@ -53,14 +53,14 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ConfigParser.cs" />
-        <Compile Include="ConfigModel.cs" />
-        <Compile Include="GlobalConstants.cs" />
-        <Compile Include="Logger.cs" />
-        <Compile Include="patcher\AbstractPatcher.cs" />
+        <Compile Include="common\CollectionUtils.cs" />
+        <Compile Include="common\GlobalConstants.cs" />
+        <Compile Include="common\Logger.cs" />
+        <Compile Include="config\ConfigModel.cs" />
+        <Compile Include="config\ConfigParser.cs" />
+        <Compile Include="patcher\AbstractHatchDietInfoPatcher.cs" />
         <Compile Include="patcher\SuperPatcher.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="utils\CollectionUtils.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

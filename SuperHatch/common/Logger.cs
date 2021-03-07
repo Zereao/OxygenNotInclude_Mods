@@ -4,9 +4,8 @@
 
 using System;
 using System.Text;
-using SuperHatch.utils;
 
-namespace SuperHatch
+namespace SuperHatch.common
 {
     /// <summary>
     /// 日志工具类，还是习惯Slf4J的打日志方式

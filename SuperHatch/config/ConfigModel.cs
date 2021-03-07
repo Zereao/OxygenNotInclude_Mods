@@ -2,7 +2,7 @@
 // @date 2021-03-06 17:32
 // @Steam https://steamcommunity/id/hexaiolun/
 
-namespace SuperHatch
+namespace SuperHatch.config
 {
     /// <summary>哈奇模型</summary>
     public class ConfigModel
