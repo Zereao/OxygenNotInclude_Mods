@@ -32,29 +32,31 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System" />
+        <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="System"/>
         <Reference Include="System.Configuration"/>
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.IO.Compression"/>
+        <Reference Include="System.Runtime.Serialization"/>
+        <Reference Include="System.ServiceModel"/>
+        <Reference Include="System.Transactions"/>
         <Reference Include="System.Web"/>
-        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\CommonTools\CommonTools.csproj">
+        <ProjectReference Include="..\hxlib\hxlib.csproj">
             <Project>{5f13280c-8b2d-446d-9ae3-9e80c0e9c1ed}</Project>
-            <Name>CommonTools</Name>
+            <Name>hxlib</Name>
         </ProjectReference>
         <ProjectReference Include="..\SuperHatch\SuperHatch.csproj">
             <Project>{bdbcc94d-f1a6-41a9-9d91-145757a300b7}</Project>
             <Name>SuperHatch</Name>
         </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="log4net" Version="2.0.12"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

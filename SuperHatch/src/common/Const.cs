@@ -5,9 +5,9 @@
 namespace SuperHatch.common
 {
     /// <summary>全局变量</summary>
-    public class GlobalConstants
+    public class Const
     {
-        private GlobalConstants()
+        private Const()
         {
         }
 

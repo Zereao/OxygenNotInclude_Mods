@@ -1,11 +1,11 @@
 // @author Zereao
-// @date 2021-03-09 21:55
+// @date 2021-03-10 21:57
 // @Steam https://steamcommunity/id/hexaiolun/
 
 using System.IO;
 using KMod;
 
-namespace CommonTools.utils
+namespace HXLib.utils
 {
     /// <summary>路径工具类</summary>
     public class PathUtils
@@ -52,36 +52,6 @@ namespace CommonTools.utils
         {
             var modsPath = GetModsPath();
             return Path.Combine(modsPath, "config", modName, configName);
-        }
-
-        /// <summary>
-        /// 获取日志文件路径：C:/Users/{user_name}/Documents/Klei/OxygenNotIncluded/mods/logs
-        /// </summary>
-        /// <returns>日志文件路径</returns>
-        public static string GetLogPath()
-        {
-            var modsPath = GetModsPath();
-            return Path.Combine(modsPath, "logs");
-        }
-
-        /// <summary>
-        /// 获取某个mod的日志文件路径：C:/Users/{user_name}/Documents/Klei/OxygenNotIncluded/mods/logs/{modName}
-        /// </summary>
-        /// <returns>某个mod的日志文件路径</returns>
-        public static string GetLogPath(string modName)
-        {
-            var modsPath = GetModsPath();
-            return Path.Combine(modsPath, "logs", modName);
-        }
-
-        /// <summary>
-        /// 获取某个mod的日志文件路径：C:/Users/{user_name}/Documents/Klei/OxygenNotIncluded/mods/logs/{modName}/{logFileName}
-        /// </summary>
-        /// <returns>获取某个mod的日志文件路径</returns>
-        public static string GetLogPath(string modName, string logFileName)
-        {
-            var modsPath = GetModsPath();
-            return Path.Combine(modsPath, "logs", modName, logFileName);
         }
     }
 }

@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using CommonTools.utils;
-using log4net;
+using HXLib.logging;
+using HXLib.utils;
+using SuperHatch.common;
 using SuperHatch.config;
 
 namespace SuperHatch.patcher
@@ -13,7 +14,7 @@ namespace SuperHatch.patcher
     /// <summary>抽象 哈奇食物信息 补丁类</summary>
     public abstract class AbstractHatchDietPatcher
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(AbstractHatchDietPatcher));
+        private static readonly Log Log = Log.GetLogger(Const.ConfigName);
 
         private static readonly ConfigModel Config = ConfigParser.GetConfig();
 

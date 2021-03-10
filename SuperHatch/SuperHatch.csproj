@@ -40,24 +40,29 @@
           <HintPath>..\lib\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\lib\Assembly-CSharp-firstpass.dll</HintPath>
+            <HintPath>..\lib\Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
+        <Reference Include="Microsoft.CSharp"/>
         <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-          <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+            <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
         </Reference>
-        <Reference Include="System" />
+        <Reference Include="System"/>
         <Reference Include="System.Configuration"/>
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
+        <Reference Include="System.IO.Compression"/>
+        <Reference Include="System.Runtime.Serialization"/>
+        <Reference Include="System.ServiceModel"/>
+        <Reference Include="System.Transactions"/>
         <Reference Include="System.Web"/>
-        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml"/>
         <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
+            <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="src\common\GlobalConstants.cs"/>
+        <Compile Include="src\common\Const.cs"/>
         <Compile Include="src\config\ConfigModel.cs"/>
         <Compile Include="src\config\ConfigParser.cs"/>
         <Compile Include="src\patcher\AbstractHatchDietPatcher.cs"/>
@@ -67,12 +72,9 @@
         <Content Include="README.md"/>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="log4net" Version="2.0.12"/>
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\CommonTools\CommonTools.csproj">
-            <Project>{5f13280c-8b2d-446d-9ae3-9e80c0e9c1ed}</Project>
-            <Name>CommonTools</Name>
+        <ProjectReference Include="..\HXLib\HXLib.csproj">
+            <Project>{9d72c700-9dc4-44fc-8249-f3ec91233ddd}</Project>
+            <Name>HXLib</Name>
         </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>

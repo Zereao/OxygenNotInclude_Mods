@@ -5,8 +5,8 @@
 using System;
 using System.Collections;
 using System.IO;
-using CommonTools.utils;
-using log4net;
+using HXLib.logging;
+using HXLib.utils;
 using Newtonsoft.Json;
 using SuperHatch.common;
 
@@ -14,22 +14,15 @@ namespace SuperHatch.config
 {
     public class ConfigParser
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigParser));
+        private static readonly Log Log = Log.GetLogger(Const.ModName);
 
-        /// <summary>
-        /// 配置文件目录路径
-        /// </summary>
-        private static readonly string ConfigPath = PathUtils.GetConfigPath(GlobalConstants.ModName);
+        /// <summary>配置文件目录路径</summary>
+        private static readonly string ConfigPath = PathUtils.GetConfigPath(Const.ModName);
 
-        /// <summary>
-        /// 配置文件路径
-        /// </summary>
-        private static readonly string ConfigFilePath =
-            PathUtils.GetConfigPath(GlobalConstants.ModName, GlobalConstants.ConfigName);
+        /// <summary>配置文件路径</summary>
+        private static readonly string ConfigFilePath = PathUtils.GetConfigPath(Const.ModName, Const.ConfigName);
 
-        /// <summary>
-        /// 尝试读取配置文件；若不存在配置文件，或配置文件校验出错，则使用默认配置
-        /// </summary>
+        /// <summary>尝试读取配置文件；若不存在配置文件，或配置文件校验出错，则使用默认配置</summary>
         /// <returns>解析出的配置</returns>
         public static ConfigModel GetOrDefaultConfig()
         {
@@ -57,24 +50,20 @@ namespace SuperHatch.config
             }
             catch (Exception e)
             {
-                Log.Error($"配置文件校验未通过！请检查配置文件是否符合JSON格式！配置文件路径：{ConfigFilePath}", e);
+                Log.Error($"配置文件校验未通过！请检查配置文件是否符合JSON格式！配置文件路径：{ConfigFilePath}");
+                Log.Error(e);
                 return null;
             }
         }
 
-        /// <summary>
-        /// 将默认配置文件写到本地；默认配置文件参考 ConfigModel 类的默认值
-        /// </summary>
+        /// <summary>将默认配置文件写到本地；默认配置文件参考 ConfigModel 类的默认值</summary>
         /// <returns>默认配置</returns>
         public static ConfigModel WriteDefaultConfig()
         {
             var defaultConfig = new ConfigModel();
             var defaultConfigJson = JsonConvert.SerializeObject(defaultConfig, Formatting.Indented);
-            using (var writer = new StreamWriter(ConfigFilePath))
-            {
-                writer.WriteLine(defaultConfigJson);
-            }
-
+            using var writer = new StreamWriter(ConfigFilePath);
+            writer.WriteLine(defaultConfigJson);
             Log.InfoFormat("已将默认配置写到本地！默认配置：{0}", defaultConfigJson);
             return defaultConfig;
         }
@@ -107,7 +96,6 @@ namespace SuperHatch.config
             }
 
             configModel.CustomConfigMapping = customConfigMapping;
-
             return configModel;
         }
     }

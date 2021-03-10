@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperHatch", "SuperHatch\Su
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestModule", "TestModule\TestModule.csproj", "{92AF1E4E-0BCF-4741-BC4A-C631B5308A8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools", "CommonTools\CommonTools.csproj", "{5F13280C-8B2D-446D-9AE3-9E80C0E9C1ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HXLib", "HXLib\HXLib.csproj", "{1B4E4812-D158-440A-987F-EB9913315C6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +20,9 @@ Global
 		{92AF1E4E-0BCF-4741-BC4A-C631B5308A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92AF1E4E-0BCF-4741-BC4A-C631B5308A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92AF1E4E-0BCF-4741-BC4A-C631B5308A8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F13280C-8B2D-446D-9AE3-9E80C0E9C1ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F13280C-8B2D-446D-9AE3-9E80C0E9C1ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F13280C-8B2D-446D-9AE3-9E80C0E9C1ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F13280C-8B2D-446D-9AE3-9E80C0E9C1ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B4E4812-D158-440A-987F-EB9913315C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4E4812-D158-440A-987F-EB9913315C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B4E4812-D158-440A-987F-EB9913315C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4E4812-D158-440A-987F-EB9913315C6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

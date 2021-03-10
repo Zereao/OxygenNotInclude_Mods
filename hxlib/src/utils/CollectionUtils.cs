@@ -1,12 +1,12 @@
 // @author Zereao
-// @date 2021-03-06 20:41
+// @date 2021-03-10 21:56
 // @Steam https://steamcommunity/id/hexaiolun/
 
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CommonTools.utils
+namespace HXLib.utils
 {
     public class CollectionUtils
     {

@@ -4,7 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using CommonTools.utils;
+using HXLib.utils;
 using Newtonsoft.Json;
 
 namespace SuperHatch.config
