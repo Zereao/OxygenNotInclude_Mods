@@ -23,7 +23,7 @@
 
     配置文件路径：C:/Users/{用户名}/Documents/Klei/OxygenNotIncluded/mods/config/SuperHatch/SuperHatch.json
 
-默认配置文件：
+当Mod加载后，会尝试去上面这个路径下读取配置文件。若文件不存在，则会自动在该路径下创建默认的配置文件：
 
 ```jsonc
 {
