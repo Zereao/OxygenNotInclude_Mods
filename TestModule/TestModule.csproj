@@ -33,8 +33,10 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System" />
+        <Reference Include="System.Configuration"/>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Web"/>
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
@@ -42,12 +44,19 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\SuperHatch\SuperHatch.csproj">
-        <Project>{bdbcc94d-f1a6-41a9-9d91-145757a300b7}</Project>
-        <Name>SuperHatch</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\CommonTools\CommonTools.csproj">
+            <Project>{5f13280c-8b2d-446d-9ae3-9e80c0e9c1ed}</Project>
+            <Name>CommonTools</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\SuperHatch\SuperHatch.csproj">
+            <Project>{bdbcc94d-f1a6-41a9-9d91-145757a300b7}</Project>
+            <Name>SuperHatch</Name>
+        </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <ItemGroup>
+        <PackageReference Include="log4net" Version="2.0.12"/>
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

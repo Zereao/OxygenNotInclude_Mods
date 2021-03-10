@@ -6,25 +6,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SuperHatch.common
+namespace CommonTools.utils
 {
     public class CollectionUtils
     {
+        /// <summary> 私有构造函数</summary>
         private CollectionUtils()
         {
         }
 
-        /// <summary>
-        /// 空 List ，全局统一，节省内存
-        /// </summary>
+        /// <summary>空 List ，全局统一，节省内存</summary>
         public static List<T> EmptyList<T>()
         {
             return Enumerable.Empty<T>().ToList();
         }
 
-        /// <summary>
-        /// 空Hashtable，全局统一，节省内存
-        /// </summary>
+        /// <summary>空Hashtable，全局统一，节省内存</summary>
         public static readonly Hashtable EmptyMap = new Hashtable();
 
         /// <summary>判断一个数组是否为空</summary>
@@ -35,10 +32,10 @@ namespace SuperHatch.common
             return args == null || args.Length == 0;
         }
 
-        /// <summary>判断一个ArrayList是否为空</summary>
+        /// <summary>判断一个ICollection是否为空</summary>
         /// <param name="list">数组</param>
         /// <returns>true OR false</returns>
-        public static bool IsEmpty(ArrayList list)
+        public static bool IsEmpty(ICollection list)
         {
             return list == null || list.Count == 0;
         }

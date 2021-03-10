@@ -46,27 +46,36 @@
           <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.Configuration"/>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
+        <Reference Include="System.Web"/>
         <Reference Include="System.Xml" />
         <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\lib\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="src\common\CollectionUtils.cs" />
-        <Compile Include="src\common\GlobalConstants.cs" />
-        <Compile Include="src\common\Logger.cs" />
-        <Compile Include="src\config\ConfigModel.cs" />
-        <Compile Include="src\config\ConfigParser.cs" />
-        <Compile Include="src\patcher\AbstractHatchDietInfoPatcher.cs" />
-        <Compile Include="src\patcher\SuperPatcher.cs" />
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="src\common\GlobalConstants.cs"/>
+        <Compile Include="src\config\ConfigModel.cs"/>
+        <Compile Include="src\config\ConfigParser.cs"/>
+        <Compile Include="src\patcher\AbstractHatchDietPatcher.cs"/>
+        <Compile Include="src\patcher\HatchDietPatcher.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="README.md" />
+        <Content Include="README.md"/>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <ItemGroup>
+        <PackageReference Include="log4net" Version="2.0.12"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\CommonTools\CommonTools.csproj">
+            <Project>{5f13280c-8b2d-446d-9ae3-9e80c0e9c1ed}</Project>
+            <Name>CommonTools</Name>
+        </ProjectReference>
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">

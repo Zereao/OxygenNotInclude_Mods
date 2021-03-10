@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using KMod;
+using CommonTools.utils;
+using log4net;
 using Newtonsoft.Json;
 using SuperHatch.common;
 
@@ -14,55 +14,51 @@ namespace SuperHatch.config
 {
     public class ConfigParser
     {
-        private static readonly common.Logger Log = new common.Logger(GlobalConstants.ModName);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(ConfigParser));
 
         /// <summary>
         /// 配置文件目录路径
         /// </summary>
-        private static readonly string ConfigPath =
-            Path.Combine(Manager.GetDirectory(), "config", GlobalConstants.ModName);
+        private static readonly string ConfigPath = PathUtils.GetConfigPath(GlobalConstants.ModName);
 
         /// <summary>
         /// 配置文件路径
         /// </summary>
-        private static readonly string ConfigFilePath = Path.Combine(ConfigPath, GlobalConstants.ModName + ".json");
+        private static readonly string ConfigFilePath =
+            PathUtils.GetConfigPath(GlobalConstants.ModName, GlobalConstants.ConfigName);
 
         /// <summary>
         /// 尝试读取配置文件；若不存在配置文件，或配置文件校验出错，则使用默认配置
         /// </summary>
-        /// <returns>
-        /// 
-        /// </returns>
-        public static List<ConfigModel> GetOrDefaultConfig()
+        /// <returns>解析出的配置</returns>
+        public static ConfigModel GetOrDefaultConfig()
         {
             if (!Directory.Exists(ConfigPath))
             {
-                Log.Info("本地配置文件目录不存在！创建文件目录，并将默认配置文件写入本地！配置文件路径：{}", ConfigFilePath);
+                Log.InfoFormat("本地配置文件目录不存在！创建文件目录，并将默认配置文件写入本地！配置文件路径：{0}", ConfigFilePath);
                 Directory.CreateDirectory(ConfigPath);
                 return WriteDefaultConfig();
             }
 
             if (!File.Exists(ConfigFilePath))
             {
-                Log.Info("本地不存在配置文件，将默认配置文件写入本地！配置文件路径：{}", ConfigFilePath);
+                Log.InfoFormat("本地不存在配置文件，将默认配置文件写入本地！配置文件路径：{0}", ConfigFilePath);
                 return WriteDefaultConfig();
             }
 
             try
             {
-                using (var sr = new StreamReader(ConfigFilePath))
-                {
-                    var jsonStr = sr.ReadToEnd();
-                    Log.Info("从本地配置文件中读取到配置：\n{}", jsonStr);
-                    return string.IsNullOrEmpty(jsonStr)
-                        ? CollectionUtils.EmptyList<ConfigModel>()
-                        : JsonConvert.DeserializeObject<List<ConfigModel>>(jsonStr);
-                }
+                using var sr = new StreamReader(ConfigFilePath);
+                var jsonStr = sr.ReadToEnd();
+                Log.InfoFormat("从本地配置文件中读取到配置：{0}", jsonStr);
+                return string.IsNullOrEmpty(jsonStr)
+                    ? null
+                    : JsonConvert.DeserializeObject<ConfigModel>(jsonStr);
             }
             catch (Exception e)
             {
-                Log.Warning("配置文件校验未通过！请检查配置文件是否符合JSON格式！配置文件路径：{}", ConfigFilePath, e);
-                return CollectionUtils.EmptyList<ConfigModel>();
+                Log.Error($"配置文件校验未通过！请检查配置文件是否符合JSON格式！配置文件路径：{ConfigFilePath}", e);
+                return null;
             }
         }
 
@@ -70,42 +66,49 @@ namespace SuperHatch.config
         /// 将默认配置文件写到本地；默认配置文件参考 ConfigModel 类的默认值
         /// </summary>
         /// <returns>默认配置</returns>
-        public static List<ConfigModel> WriteDefaultConfig()
+        public static ConfigModel WriteDefaultConfig()
         {
-            var defaultConfig = new List<ConfigModel> {new ConfigModel()};
+            var defaultConfig = new ConfigModel();
             var defaultConfigJson = JsonConvert.SerializeObject(defaultConfig, Formatting.Indented);
             using (var writer = new StreamWriter(ConfigFilePath))
             {
                 writer.WriteLine(defaultConfigJson);
             }
 
-            Log.Info("已将默认配置写到本地！默认配置：\n{}", defaultConfigJson);
+            Log.InfoFormat("已将默认配置写到本地！默认配置：{0}", defaultConfigJson);
             return defaultConfig;
         }
 
-        /// <summary>
-        /// 将配置文件中的数据，映射为一个 HashTable
-        /// </summary>
-        /// <returns>key - 食物名称，value - 食物数据</returns>
-        public static Hashtable GetConfigMapping()
+        /// <summary>将配置文件中的数据，映射为一个 HashTable，并获取最终组装后的ConfigModel</summary>
+        /// <returns>最终组装后的ConfigModel</returns>
+        public static ConfigModel GetConfig()
         {
-            var config = GetOrDefaultConfig();
-            if (CollectionUtils.IsEmpty(config))
+            var configModel = GetOrDefaultConfig();
+            if (configModel == null)
             {
                 Log.Info("从配置文件中读取到的配置为空！故将配置映射为空映射关系！");
-                return CollectionUtils.EmptyMap;
+                return null;
             }
 
-            var configMapping = new Hashtable(config.Count);
-            Log.Info("准备开始执行配置映射：");
-            foreach (var configModel in config)
+            var customConfig = configModel.CustomConfig;
+            if (CollectionUtils.IsEmpty(customConfig))
             {
-                var name = configModel.ConsumeName;
-                configMapping.Add(name, configModel);
-                Log.Info("key: {}，value：{}", name, configModel.ToString());
+                Log.Info("从配置文件中读取到的自定义配置(CustomConfig)为空！");
+                return configModel;
             }
 
-            return configMapping;
+            var customConfigMapping = new Hashtable(customConfig.Count);
+            Log.Info("准备开始执行配置映射：");
+            foreach (var config in customConfig)
+            {
+                var name = config.ConsumeName;
+                customConfigMapping.Add(name, config);
+                Log.InfoFormat("配置映射关系：key: {0}，value：{1}", name, config);
+            }
+
+            configModel.CustomConfigMapping = customConfigMapping;
+
+            return configModel;
         }
     }
 }

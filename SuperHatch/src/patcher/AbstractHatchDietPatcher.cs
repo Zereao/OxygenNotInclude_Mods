@@ -3,34 +3,71 @@
 // @Steam https://steamcommunity/id/hexaiolun/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using SuperHatch.common;
+using CommonTools.utils;
+using log4net;
 using SuperHatch.config;
 
 namespace SuperHatch.patcher
 {
     /// <summary>抽象 哈奇食物信息 补丁类</summary>
-    public abstract class AbstractHatchDietInfoPatcher
+    public abstract class AbstractHatchDietPatcher
     {
-        private static readonly Hashtable ConfigMapping = ConfigParser.GetConfigMapping();
+        private static readonly ILog Log = LogManager.GetLogger(typeof(AbstractHatchDietPatcher));
 
-        private static readonly common.Logger Log = new common.Logger(GlobalConstants.ModName);
+        private static readonly ConfigModel Config = ConfigParser.GetConfig();
 
         /// <summary>
-        /// 补丁逻辑：
-        /// 如果配置项不能解析成功，则保持原样；否则，加载配置项
+        /// 前置处理，用于加载全局配置；补丁逻辑：
+        /// 如果前置配置(GlobalConfig)项为空，或不能解析成功，则保持原样；否则，加载全局配置
+        /// </summary>
+        /// <param name="caloriesPerKg">每千克食物能提供的卡路里数</param>
+        /// <param name="producedConversionRate">转换率</param>
+        public static void DoPrefixPatch(ref float caloriesPerKg, ref float producedConversionRate)
+        {
+            var customConfig = Config.GlobalConfig;
+            var consumeEachCycle = customConfig.ConsumeEachCycle;
+            var produceEachCycle = customConfig.ProduceEachCycle;
+            if (consumeEachCycle <= 0.0f)
+            {
+                Log.InfoFormat("全局配置未加载！每周期消耗量必须大于0，否则不生效！consumeEachCycle = {0}", consumeEachCycle);
+                return;
+            }
+
+            // 每千克食物能提供的卡路里数 = 哈奇每周期的卡路里需求 / 哈奇每周期需要消耗的食物千克数
+            caloriesPerKg = HatchTuning.STANDARD_CALORIES_PER_CYCLE / consumeEachCycle;
+
+            if (produceEachCycle > 0.0f)
+            {
+                // 消耗产出转化率 = 哈奇每周期的产物千克数 / 哈奇每周期需要消耗的食物千克数
+                producedConversionRate = produceEachCycle / consumeEachCycle;
+            }
+
+            Log.InfoFormat("全局配置加载完毕！newCaloriesPerKg = {0}，newProducedConversionRate = {1}",
+                caloriesPerKg, producedConversionRate);
+        }
+
+        /// <summary>
+        /// 后置处理，用于加载自定义配置；补丁逻辑：
+        /// 如果 customConfigMapping中有数据，则按照映射进行个性化配置
         /// </summary>
         /// <param name="result">原始处理结果</param>
         /// <param name="producedConversionRate">转换率</param>
         /// <param name="diseaseId">疾病ID，不做处理，只用作值传递</param>
         /// <param name="diseasePerKgProduced">每千克产生疾病数，不做处理，只用作值传递</param>
-        public static void DoPatch(
+        public static void DoPostfixPatch(
             ref List<Diet.Info> result,
             float producedConversionRate,
             ref string diseaseId, ref float diseasePerKgProduced)
         {
-            var newResultList = new List<Diet.Info>();
+            var configMapping = Config.CustomConfigMapping;
+            if (CollectionUtils.IsEmpty(configMapping))
+            {
+                Log.Info("配置映射为空！未加载任何自定义配置！");
+                return;
+            }
+
+            var newResultList = new List<Diet.Info>(configMapping.Count);
             foreach (var dietInfo in result)
             {
                 var consumedTags = dietInfo.consumedTags;
@@ -41,21 +78,21 @@ namespace SuperHatch.patcher
                     var caloriesPerKg = dietInfo.caloriesPerKg;
                     var produceTagName = produceTag.Name;
                     var conversionRate = producedConversionRate;
-                    if (ConfigMapping.ContainsKey(consumeTagName) &&
-                        ConfigMapping[consumeTagName] is ConfigModel config)
+                    if (configMapping.ContainsKey(consumeTagName) &&
+                        configMapping[consumeTagName] is CustomConfig customConfig)
                     {
-                        produceTagName = config.ProduceName;
-                        caloriesPerKg = HatchTuning.STANDARD_CALORIES_PER_CYCLE / config.ConsumeEachCycle;
-                        conversionRate = config.ProduceEachCycle / config.ConsumeEachCycle;
+                        produceTagName = customConfig.ProduceName;
+                        caloriesPerKg = HatchTuning.STANDARD_CALORIES_PER_CYCLE / customConfig.ConsumeEachCycle;
+                        conversionRate = customConfig.ProduceEachCycle / customConfig.ConsumeEachCycle;
                         // 下面是日志输出所需数据
                         var oldConsumeEachCycle = HatchTuning.STANDARD_CALORIES_PER_CYCLE / caloriesPerKg;
                         var oldProduceEachCycle = oldConsumeEachCycle * producedConversionRate;
-                        Log.Info(
-                            "为食物 = {} 加载配置文件！\n原产物：{}，新产物：{}\n原每周期消耗：{}kg，现每周期消耗：{}kg\n原每周期产出：{}kg，现每周期产出：{}kg\n原转换率：{}，新转换率：{}",
+                        Log.InfoFormat(
+                            "为食物 = {0} 加载配置文件！\n原产物：{1}，新产物：{2}\n原每周期消耗：{3}kg，现每周期消耗：{4}kg\n原每周期产出：{5}kg，现每周期产出：{6}kg\n原转换率：{7}，新转换率：{8}",
                             consumeTagName,
-                            produceTagName, config.ProduceName,
-                            oldConsumeEachCycle, config.ConsumeEachCycle,
-                            oldProduceEachCycle, config.ProduceEachCycle,
+                            produceTagName, customConfig.ProduceName,
+                            oldConsumeEachCycle, customConfig.ConsumeEachCycle,
+                            oldProduceEachCycle, customConfig.ProduceEachCycle,
                             producedConversionRate, conversionRate
                         );
                     }
@@ -105,29 +142,6 @@ namespace SuperHatch.patcher
                 caloriesPerKg, producedConversionRate,
                 diseaseId, diseasePerKgProduced
             );
-        }
-
-        /// <summary>
-        /// 本地Debug调试时使用
-        /// </summary>
-        /// <param name="result">需要输出的信息</param>
-        private static void DebugToString(IEnumerable<Diet.Info> result)
-        {
-            Log.Info("**************************** 输出原始调试信息 ****************************");
-            foreach (var dietInfo in result)
-            {
-                var consumedTags = dietInfo.consumedTags;
-                var produceTag = dietInfo.producedElement;
-                var caloriesPerKg = dietInfo.caloriesPerKg;
-                var produceTagName = produceTag.Name;
-                foreach (var consumedTag in consumedTags)
-                {
-                    Log.Info("消费：{}，产生：{}，caloriesPerKg = {}，转换率：{}",
-                        consumedTag.Name, produceTagName, caloriesPerKg, dietInfo.producedConversionRate);
-                }
-            }
-
-            Log.Info("************************************************************************");
         }
     }
 }

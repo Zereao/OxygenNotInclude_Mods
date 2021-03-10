@@ -13,5 +13,8 @@ namespace SuperHatch.common
 
         /// <summary>Mod名</summary>
         public const string ModName = "SuperHatch";
+
+        /// <summary>配置文件名称</summary>
+        public const string ConfigName = "SuperHatch.json";
     }
 }
