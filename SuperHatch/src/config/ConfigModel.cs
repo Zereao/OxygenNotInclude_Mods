@@ -26,7 +26,7 @@ namespace SuperHatch.config
 
         public override string ToString()
         {
-            return $"【{GlobalConfig},{CustomConfig}】";
+            return JsonConvert.SerializeObject(this);
         }
     }
 

@@ -46,7 +46,8 @@ namespace SuperHatch.config
                 Log.InfoFormat("从本地配置文件中读取到配置：{0}", jsonStr);
                 return string.IsNullOrEmpty(jsonStr)
                     ? null
-                    : JsonConvert.DeserializeObject<ConfigModel>(jsonStr);
+                    : JsonConvert.DeserializeObject<ConfigModel>(jsonStr,
+                        new JsonSerializerSettings {ObjectCreationHandling = ObjectCreationHandling.Replace});
             }
             catch (Exception e)
             {
@@ -91,6 +92,12 @@ namespace SuperHatch.config
             foreach (var config in customConfig)
             {
                 var name = config.ConsumeName;
+                if (customConfigMapping.ContainsKey(name))
+                {
+                    Log.InfoFormat("当前食物【{0}】的映射关系已经存在！忽略配置！", name);
+                    continue;
+                }
+
                 customConfigMapping.Add(name, config);
                 Log.InfoFormat("配置映射关系：key: {0}，value：{1}", name, config);
             }

@@ -16,7 +16,7 @@ namespace SuperHatch.patcher
     {
         private static readonly Log Log = Log.GetLogger(Const.ConfigName);
 
-        private static readonly ConfigModel Config = ConfigParser.GetConfig();
+        public static readonly ConfigModel Config = ConfigParser.GetConfig();
 
         /// <summary>
         /// 前置处理，用于加载全局配置；补丁逻辑：
